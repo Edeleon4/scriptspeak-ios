@@ -9,11 +9,14 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController {
+
+class ViewController: UIViewController{
+    
+    var historyPhrases: [String] = []
 
     @IBOutlet weak var textToPlayField: UITextField!
-    @IBOutlet weak var favoritesTableView: UITableView!
-    @IBOutlet weak var historyTableView: UITableView!
+    
+    
     @IBAction func playButtonClicked(sender: AnyObject) {
         let text = textToPlayField.text
         var dictation:CrowdSpeech = CrowdSpeech(text:text)
@@ -21,18 +24,21 @@ class ViewController: UIViewController {
         var mySpeechUtterance = AVSpeechUtterance(string:text)
         synthesizer.speakUtterance(mySpeechUtterance)
         dictation.incrementUsageCount()
+        historyPhrases.append(text)
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
 
-
+    
 }
 
