@@ -37,7 +37,7 @@ class DictationTableViewController : UITableViewController {
             [self.tableView addSubview:refreshControl];
             [self.refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
             
-            self.biteData = @[];
+            self.dictations = [Dictation]()
             
             
             UIView *empty = [UIView new];
@@ -124,20 +124,30 @@ class DictationTableViewController : UITableViewController {
             }
             
 #pragma mark - Table view data source
-
+/*
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
     return 1;
     }
-    
+*/
+    func tableView(tableView:UITableView, numberOfSectionsInTableView section: Int)-> Int{
+        return 1
+    }
+
+    /*
     - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
     return [self.biteData count];
     }
-    
-    
+*/
+    // use as many rows as number of dictations
+     func tableView(tableView:UITableView, numberOfRowsInSection section:Int) -> Int {
+        return self.dictations.count
+    }
+
+/*
     - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BTBiteTableViewCell *cell =  (BTBiteTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
@@ -193,6 +203,21 @@ class DictationTableViewController : UITableViewController {
     }
     
     return cell;
+}
+*/
+
+// populate each cell
+override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath:NSIndexPath)->UITableViewCell{
+    let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+    
+    // Get the corresponding candy from our candies array
+    let dictation = self.dictations[indexPath.row]
+    
+    // Configure the cell
+    cell.textLabel!.text = dictation.text
+    cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+    
+    return cell
 }
 
 
